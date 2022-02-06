@@ -1,0 +1,9 @@
+FROM python
+
+WORKDIR /shop_app
+
+COPY . /shop_app
+
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+CMD ["python", "__main__.py"]

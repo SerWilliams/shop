@@ -1,0 +1,5 @@
+cd shop_app
+..\venv\Scripts\alembic.exe init alembic
+..\venv\Scripts\alembic.exe revision --autogenerate
+..\venv\Scripts\alembic.exe upgrade head
+

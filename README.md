@@ -7,9 +7,9 @@
 - app<br>
 - alembic<br>
 
-Приложение (пока пустое) доступно по localhost
+Приложение без фронта доступно по localhost
 <br>
-Админка DB localhost:8080
+Админка DB localhost/db_admin
 <br>
 Для БД нужно создать директорию db_stor в корне shop и сформировать через alembic(alembic_upgrade)
 <br>

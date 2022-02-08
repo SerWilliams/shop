@@ -1,23 +1,25 @@
 from logging.config import fileConfig
+import sys
+from pathlib import Path
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
 
-import os, sys
-
-current_path = os.path.dirname(os.path.abspath(__file__))
-ROOT_PATH = os.path.join(current_path, '..\..')
-sys.path.append(ROOT_PATH)
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 
 from shop_app.base.tables import *
 from shop_app.base.database import engine
+from shop_app.settings import settings
 
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+section = config.config_ini_section
+config.set_section_option(section, "DATABASE_URL", settings.database_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -28,6 +30,7 @@ fileConfig(config.config_file_name)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = Base.metadata
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

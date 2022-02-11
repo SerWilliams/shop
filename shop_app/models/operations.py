@@ -4,32 +4,29 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class ShopBase(BaseModel):
-    shop_name: str
-    shop_code: int
-    address: Optional[str]
-    active: bool
-
+class MyBase(BaseModel):
     class Config:
         orm_mode = True
 
 
-class ArticleBase(BaseModel):
-    art_name: str
-    art_code: int
+class ShopBase(MyBase):
+    name: str
+    code: int
+    address: Optional[str]
+    active: bool
+
+
+class ArticleBase(MyBase):
+    name: str
+    code: int
     price: float
     # category: CategoryBase
     active: bool
 
-    class Config:
-        orm_mode = True
 
-
-class CategoryBase(BaseModel):
-    cat_name: str
-
-    class Config:
-        orm_mode = True
+class CategoryBase(MyBase):
+    name: str
+    description: Optional[str]
 
 
 class ShopCreate(ShopBase):

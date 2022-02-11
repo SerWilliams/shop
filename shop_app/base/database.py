@@ -4,7 +4,8 @@ from shop_app.settings import settings
 
 
 engine = create_engine(
-    settings.database_url
+    settings.database_url,
+    client_encoding='utf8'
 )
 
 Session = sessionmaker(

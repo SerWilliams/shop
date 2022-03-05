@@ -1,5 +1,7 @@
 from typing import List
 from fastapi import APIRouter, Depends
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 
 from shop_app.models.operations import *
 from shop_app.services.operations import OperationService
@@ -10,13 +12,16 @@ router = APIRouter(
 )
 
 
-@router.get('/shops', response_model=List[ShopBase])
+@router.get('/shops')
 async def get_shop(
-        shop_code: Optional[int] = None,
-        shop_name: Optional[str] = None,
+        code: Optional[int] = None,
+        name: Optional[str] = None,
         service: OperationService = Depends()
 ):
-    return service.get_shops(shop_code, shop_name)
+    # content = jsonable_encoder({'shops': service.get_shops(code, name)})
+    # return JSONResponse(content=content)
+    data = service.get_shops(code, name)
+    return {'shops': data}
 
 
 @router.post('/shops', response_model=ShopCreate)
@@ -29,20 +34,20 @@ async def create_shop(
 
 @router.put('/shops/', response_model=ShopCreate)
 async def update_shop(
-        shop_code: int,
+        code: int,
         shop_data: ShopBase,
         service: OperationService = Depends()
 ):
-    return service.update_shop(shop_code=shop_code, shop_data=shop_data)
+    return service.update_shop(code=code, shop_data=shop_data)
 
 
 @router.get('/articles', response_model=List[ArticleBase])
 async def get_article(
-        art_code: Optional[int] = None,
-        art_name: Optional[str] = None,
+        code: Optional[int] = None,
+        name: Optional[str] = None,
         service: OperationService = Depends()
 ):
-    return service.get_arts(art_code, art_name)
+    return service.get_arts(code, name)
 
 
 @router.post('/articles', response_model=ArticleCreate)
@@ -55,8 +60,8 @@ async def create_article(
 
 @router.put('/articles', response_model=ArticleCreate)
 async def update_article(
-        art_code: int,
+        code: int,
         art_data: ArticleBase,
         service: OperationService = Depends()
 ):
-    return service.update_art(art_code=art_code, art_data=art_data)
+    return service.update_art(code=code, art_data=art_data)

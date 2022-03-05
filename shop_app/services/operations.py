@@ -90,3 +90,4 @@ class OperationService:
 
     def update_art_rest(self):
         pass
+

@@ -18,7 +18,7 @@ for csv_file, table_name in (
         model_class = getattr(operations, table_name + 'Base')
         data = [model_class(**dict(zip(fielders, item))) for item in csv_obj]
         table = getattr(tables, table_name)
-
+        session.query(table).delete()
         items = [
             table(
                 **item.dict()
